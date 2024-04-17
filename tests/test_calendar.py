@@ -281,8 +281,8 @@ def calendar_with_some_slots_available():
 
 class TestCalendar:
     @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
-    def test_calendar_class_is_not_marked_as_dataclass(self, day):
-        assert not hasattr(day, "__dataclass_params__")
+    def test_calendar_class_is_not_marked_as_dataclass(self, empty_calendar):
+        assert not hasattr(empty_calendar, "__dataclass_params__")
 
     @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
     @pytest.mark.parametrize(
