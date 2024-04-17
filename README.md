@@ -30,14 +30,14 @@ las siguientes instrucciones:
 2. **Clase** `Event`
 
    - La clase se debe implementar como una dataclass.
-   - El atributo `id` de tipo `str` **no** se inicializa con un parámetro en el constructor y debe tener un valor por 
-   defecto igual al resultado de invocar la función `generate_unique_id` que se encuentra en el módulo `app.services.util`.
-     (Utiliza el parámetro `default_factory` de la función `field` de la librería `dataclasses` para asignar el valor por
-        defecto).
    - Los atributos `title` de tipo `str`, `description` de tipo `str`, `date_` de tipo `date`, `start_at` de tipo 
    `time` y `end_at` de tipo `time` se deben inicializar con parámetros en el constructor de forma obligatoria.
    - El atributo `reminders` de tipo `list[Reminder]` no se inicializa con parámetro en el constructor y debe tener como valor 
    por defecto una lista vacía.
+   - El atributo `id` de tipo `str` se inicializa con un parámetro opcional en el constructor, pero debe tener un valor por 
+   defecto igual al resultado de invocar la función `generate_unique_id` que se encuentra en el módulo `app.services.util`.
+     (Utiliza el parámetro `default_factory` de la función `field` de la librería `dataclasses` para asignar el valor por
+        defecto).
    - El método `add_reminder` crea un objeto de la clase `Reminder` con los parámetros recibidos y lo agrega a la lista
    `reminders` del evento.
    - El método `delete_reminder` recibe un parámetro `reminder_index` de tipo `int` que representa un índice de la lista
@@ -105,7 +105,7 @@ las siguientes instrucciones:
    inicial es un diccionario vacío.
    - El método `add_event` recibe los parámetros `title` de tipo `str`, `description` de tipo `str`, `date_` de tipo
     `date`, `start_at` de tipo `time` y `end_at` de tipo `time`. El método verifica que la fecha `date_` no sea anterior
-    a la fecha actual. En caso de que la fecha sea anterior a la fecha actual, el método invoca la función
+    a la fecha actual (puede utilizar la función `datetime.now().date()`). En caso de que la fecha sea anterior a la fecha actual, el método invoca la función
     `date_lower_than_today_error` que se encuentra en el módulo `app.services.util`. En caso contrario, 
    el método verifica si no hay un objeto de la clase `Day` en el diccionario `days` con la fecha `date_` como clave.
     En caso de que no exista un objeto de la clase `Day` con la fecha `date_` como clave, el método crea un objeto de la
