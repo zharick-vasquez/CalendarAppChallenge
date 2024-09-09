@@ -196,10 +196,3 @@ las siguientes instrucciones:
 Para ejecutar las pruebas, debes installar la dependencia pytest (`pip install pytest`).
 - Para que las pruebas funcionen adecuadamente debes implementar el código respetando 
 los nombres y la definición de las clases y los métodos que se presentan en el diagrama.
-- La evaluación del ejercicio se hará con base en el cumplimiento de los requisitos que 
-arrojen las pruebas. Por lo tanto, cualquier fallo en las pruebas debido a nombres mal 
-escritos o que no concuerden con el modelo dado se considerará como un requisito no 
-cumplido, afectando la calificación del examen. Igualmente, si las pruebas no ejecutan 
-porque el código entregado tiene errores de sintaxis, se considerará como no 
-cumplimiento de los requisitos. En este sentido, es importante que no entregues 
-código que tenga errores de sintaxis simplemente por entregar cualquier cosa.
