@@ -37,11 +37,11 @@ def reminder_with_system():
 
 
 class TestReminder:
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_reminder_class_decorated_with_dataclass(self, reminder_with_email):
         assert hasattr(reminder_with_email, "__dataclass_params__")
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     @pytest.mark.parametrize(
         "constant_name, constant_value", [("EMAIL", "email"), ("SYSTEM", "system")]
     )
@@ -49,7 +49,7 @@ class TestReminder:
         assert hasattr(reminder_with_email, constant_name)
         assert getattr(reminder_with_email, constant_name) == constant_value
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     @pytest.mark.parametrize(
         "attribute_name, attribute_type",
         [("date_time", datetime), ("type", str)]
@@ -58,13 +58,13 @@ class TestReminder:
         assert hasattr(reminder_with_email, attribute_name)
         assert isinstance(getattr(reminder_with_email, attribute_name), attribute_type)
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_reminder_class_has_str_method(self, reminder_with_email):
         assert hasattr(reminder_with_email, "__str__")
         assert callable(getattr(reminder_with_email, "__str__"))
         assert isinstance(reminder_with_email.__str__(), str)
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_reminder_str_method_output(self, reminder_with_email):
         assert str(reminder_with_email) == "Reminder on 2024-05-01 12:00:00 of type email"
 
@@ -92,11 +92,11 @@ def event_with_reminders():
 
 class TestEvent:
 
-    @pytest.mark.xfail(not event_defined, reason="Event class not defined")
+    @pytest.mark.skipif(not event_defined, reason="Event class not defined")
     def test_event_class_decorated_with_dataclass(self, event_without_reminders):
         assert hasattr(event_without_reminders, "__dataclass_params__")
 
-    @pytest.mark.xfail(not event_defined, reason="Event class not defined")
+    @pytest.mark.skipif(not event_defined, reason="Event class not defined")
     @pytest.mark.parametrize(
         "attribute_name, attribute_type",
         [("title", str), ("description", str), ("date_", date),
@@ -106,7 +106,7 @@ class TestEvent:
         assert hasattr(event_without_reminders, attribute_name)
         assert isinstance(getattr(event_without_reminders, attribute_name), attribute_type)
 
-    @pytest.mark.xfail(not event_defined, reason="Event class not defined")
+    @pytest.mark.skipif(not event_defined, reason="Event class not defined")
     @pytest.mark.parametrize(
         "attribute_name, expected_value",
         [("title", "Event title"), ("description", "Event description"),
@@ -122,7 +122,7 @@ class TestEvent:
         else:
             assert getattr(event_without_reminders, attribute_name)
 
-    @pytest.mark.xfail(not event_defined, reason="Event class not defined")
+    @pytest.mark.skipif(not event_defined, reason="Event class not defined")
     @pytest.mark.parametrize(
         "method_name, expected_return_type, args",
         [("add_reminder", None, (datetime(2024, 5, 1, 9, 0), "email")),
@@ -136,26 +136,26 @@ class TestEvent:
         if expected_return_type:
             assert isinstance(method(*args), expected_return_type)
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_add_reminder_method_functionality(self, event_without_reminders):
         event_without_reminders.add_reminder(datetime(2024, 5, 1, 9, 0), Reminder.EMAIL)
         assert len(event_without_reminders.reminders) == 1
         assert event_without_reminders.reminders[0].type == Reminder.EMAIL
         assert event_without_reminders.reminders[0].date_time == datetime(2024, 5, 1, 9, 0)
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_delete_reminder_method_functionality(self, event_with_reminders):
         event_with_reminders.delete_reminder(0)
         assert len(event_with_reminders.reminders) == 1
         assert event_with_reminders.reminders[0].type == Reminder.SYSTEM
         assert event_with_reminders.reminders[0].date_time == datetime(2024, 5, 1, 8, 0)
 
-    @pytest.mark.xfail(not reminder_defined, reason="Reminder class not defined")
+    @pytest.mark.skipif(not reminder_defined, reason="Reminder class not defined")
     def test_delete_reminder_method_calls_reminder_not_found_error(self, event_without_reminders):
         with pytest.raises(ValueError):
             event_without_reminders.delete_reminder(0)
 
-    @pytest.mark.xfail(not event_defined, reason="Event class not defined")
+    @pytest.mark.skipif(not event_defined, reason="Event class not defined")
     def test_event_class_str_method_output(self, event_without_reminders):
         event_str = str(event_without_reminders)
         assert f"ID: {event_without_reminders.id}" in event_str
@@ -178,11 +178,11 @@ def day_with_event():
 
 class TestDay:
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     def test_day_class_is_not_marked_as_dataclass(self):
         assert not hasattr(Day, "__dataclass_params__")
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     @pytest.mark.parametrize(
         "attribute_name, attribute_type",
         [("date_", date), ("slots", dict)]
@@ -191,7 +191,7 @@ class TestDay:
         assert hasattr(day, attribute_name)
         assert isinstance(getattr(day, attribute_name), attribute_type)
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     @pytest.mark.parametrize(
         "method_name, expected_return_type, args",
         [("__init__", None, (date(2024, 5, 1))),
@@ -207,7 +207,7 @@ class TestDay:
         if expected_return_type:
             assert isinstance(method(*args), expected_return_type)
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     @pytest.mark.parametrize(
         "attribute_name, expected_value",
         [("date_", date(2024, 5, 1)),
@@ -217,7 +217,7 @@ class TestDay:
     def test_day_class_initializes_attributes(self, day, attribute_name, expected_value):
         assert getattr(day, attribute_name) == expected_value
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     def test_add_event_method_functionality(self, day):
         day.add_event("event_id", time(10, 0), time(11, 0))
         assert day.slots[time(10, 0)] == "event_id"
@@ -226,7 +226,7 @@ class TestDay:
         assert day.slots[time(10, 45)] == "event_id"
         assert day.slots[time(11, 0)] is None
 
-    @pytest.mark.xfail(not day_defined, reason="Day class not defined")
+    @pytest.mark.skipif(not day_defined, reason="Day class not defined")
     def test_add_event_calls_slot_not_available_error(self, day_with_event):
         with pytest.raises(ValueError):
             day_with_event.add_event("event_id", time(10, 0), time(11, 0))
@@ -280,11 +280,11 @@ def calendar_with_some_slots_available():
 
 
 class TestCalendar:
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_calendar_class_is_not_marked_as_dataclass(self, empty_calendar):
         assert not hasattr(empty_calendar, "__dataclass_params__")
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     @pytest.mark.parametrize(
         "attribute_name, attribute_type",
         [("days", dict), ("events", dict)]
@@ -293,7 +293,7 @@ class TestCalendar:
         assert hasattr(empty_calendar, attribute_name)
         assert isinstance(getattr(empty_calendar, attribute_name), attribute_type)
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     @pytest.mark.parametrize(
         "method_name, expected_return_type, args",
         [("add_event", str, ("Event 1", "Event 1 description", date(2024, 5, 1), time(10, 0), time(11, 0))),
@@ -313,7 +313,7 @@ class TestCalendar:
         if expected_return_type:
             assert isinstance(method(*args), expected_return_type)
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     @pytest.mark.parametrize(
         "attribute_name, expected_value",
         [("days", {}),
@@ -322,7 +322,7 @@ class TestCalendar:
     def test_calendar_class_initializes_attributes(self, empty_calendar, attribute_name, expected_value):
         assert getattr(empty_calendar, attribute_name) == expected_value
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_event_method_adds_the_event_to_the_event_dict(self, empty_calendar):
         event_id = empty_calendar.add_event("Event 1", "Event 1 description", date(2024, 5, 1), time(10, 0), time(11, 0))
         assert len(empty_calendar.events) == 1
@@ -333,40 +333,40 @@ class TestCalendar:
         assert empty_calendar.events[event_id].start_at == time(10, 0)
         assert empty_calendar.events[event_id].end_at == time(11, 0)
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_event_method_returns_event_id(self, empty_calendar):
         event_id = empty_calendar.add_event("Event 1", "Event 1 description", date(2024, 5, 1), time(10, 0), time(11, 0)
         )
         assert event_id
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_event_method_calls_date_lower_than_today_error(self, empty_calendar):
         with pytest.raises(ValueError):
             empty_calendar.add_event("Event 1", "Event 1 description", date(2020, 5, 1), time(10, 0), time(11, 0))
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_event_method_creates_day_object_in_days_dict(self, empty_calendar):
         empty_calendar.add_event("Event 1", "Event 1 description", date(2024, 5, 1), time(10, 0), time(11, 0))
         assert date(2024, 5, 1) in empty_calendar.days
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_event_method_calls_add_event_on_day_object(self, empty_calendar):
         event_id = empty_calendar.add_event("Event 1", "Event 1 description", date(2024, 5, 1), time(10, 0), time(11, 0))
         assert event_id in empty_calendar.days[date(2024, 5, 1)].slots.values()
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_reminder_method_functionality(self, calendar_with_events):
         calendar_with_events.add_reminder("event_id", datetime(2024, 5, 1, 9, 0), Reminder.EMAIL)
         assert len(calendar_with_events.events["event_id"].reminders) == 1
         assert calendar_with_events.events["event_id"].reminders[0].type == Reminder.EMAIL
         assert calendar_with_events.events["event_id"].reminders[0].date_time == datetime(2024, 5, 1, 9, 0)
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_add_reminder_method_calls_event_not_found_error(self, calendar_with_events):
         with pytest.raises(ValueError):
             calendar_with_events.add_reminder("event_id_not_found", datetime(2024, 5, 1, 9, 0), Reminder.EMAIL)
 
-    @pytest.mark.xfail(not calendar_defined, reason="Calendar class not defined")
+    @pytest.mark.skipif(not calendar_defined, reason="Calendar class not defined")
     def test_find_available_slots_method_functionality(self, calendar_with_some_slots_available):
         available_slots = calendar_with_some_slots_available.find_available_slots(date(2024, 5, 1))
         assert len(available_slots) == 4
